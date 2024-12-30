@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+    
+    <h1>Hello World</h1>
+    <div class="" id="details">
+
+    </div>
+    <div id="countries" class="countries">
+        
+       
+        
+    </div>
+
+    <script>
+        const loadCountries =()=>{
+            fetch("https://restcountries.com/v3.1/all")
+            .then(res=>res.json())
+            .then(data=>displayCountries(data)
+        )
+        }
+        loadCountries()
+
+
+        const displayCountries =(countries)=>{
+
+            const displayDiv = document.getElementById("countries")
+
+
+
+            countries.forEach(country => {
+
+
+
+                const div = document.createElement('div')
+                div.classList.add('country')
+                div.innerHTML = `
+                    <img src="${country.flags.png}" alt="">
+                    <h3>Name: ${country.name.common}</h3>
+                    <p>Capital: ${country.capital}</p>
+                    <button onclick="loadGreenWave('${country.name.common}')">Show Details</button>
+                 
+                `
+                displayDiv.appendChild(div)
+            } ) 
+
+        }
+        const loadGreenWave =(countryName)=>{
+            fetch(`https://restcountries.com/v3.1/name/${countryName}`)
+            .then(response=>response.json())
+            .then(json=> displayGreenWave(json[0])
+        )
+        }
+
+        const displayGreenWave=(country)=>{
+            const detailsUi = document.getElementById('details');
+            detailsUi.innerHTML = `
+                  
+                  <div class="country">
+                    <img src="${country.flags.png}" alt="">
+                    <h3>Name: ${country.name.common}</h3>
+                    <p>Capital: ${country.capital}</p>
+                    <p>population: ${country.population}</p>
+                    <p>Area: ${country.area} sq km</p>
+                  </div>
+                 
+                `
+        }
+    </script>
+</body>
+</html>
